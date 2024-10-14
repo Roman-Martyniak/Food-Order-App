@@ -1,12 +1,12 @@
 import { useContext } from 'react';
 import CartContext from '../../../store/CartContext';
-import { UserProgressContext } from '../../../store/UserProgressContext.tsx';
+import { UserProgressContext } from '../../../store/UserProgressContext';
 import Input from '../Input/Input';
 import Button from '../Button/Button';
 import Modal from '../Modal/Modal';
 import { currencyFormatter } from '../../../utils/formatting';
 import useHttp from '../../../hooks/useHttp';
-import Error from '../../Error/Error.tsx';
+import Error from '../../Error/Error';
 
 const requestConfig = {
   method: 'POST' as const,
@@ -24,7 +24,7 @@ export default function Checkout() {
     error,
     sendRequest,
     clearData,
-  } = useHttp('http://localhost:3000/orders', requestConfig, []);
+  } = useHttp('http://localhost:3000/orders', requestConfig, null);
 
   const cartTotal = cartCtx.items.reduce(
     (totalPrice, item) => totalPrice + item.quantity * item.price,

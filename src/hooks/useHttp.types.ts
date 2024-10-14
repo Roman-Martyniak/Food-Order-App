@@ -6,6 +6,6 @@ export interface UseHttpReturn<T> {
   data: T | null;
   isLoading: boolean;
   error: string | null;
-  sendRequest: (data?: any) => Promise<void>;
+  sendRequest: (data?: unknown) => Promise<void>;
   clearData: () => void;
 }

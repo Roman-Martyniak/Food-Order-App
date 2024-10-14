@@ -9,13 +9,10 @@ const Button: FunctionComponent<ButtonProps> = ({
 }) => {
   let cssClasses = textOnly ? 'text-button' : 'button';
   cssClasses += ' ' + className;
-
   return (
-    <>
-      <button className={cssClasses} {...props}>
-        {children}
-      </button>
-    </>
+    <button className={cssClasses} {...props}>
+      {children}
+    </button>
   );
 };
 

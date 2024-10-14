@@ -1,8 +1,9 @@
 import { useContext, FunctionComponent } from 'react';
-import { currencyFormatter } from '../../utils/formatting';
-import Button from '../UI/Button/Button';
-import CartContext from '../../store/CartContext';
-import { MealItemProps } from './MealItem.props';
+
+import Button from '../UI/Button/Button.tsx';
+import CartContext from '../../store/CartContext.tsx';
+import { MealItemProps } from './MealItem.props.ts';
+import { currencyFormatter } from '../../utils/formatting.ts';
 
 const MealItem: FunctionComponent<MealItemProps> = ({ meal }) => {
   const cartCtx = useContext(CartContext);

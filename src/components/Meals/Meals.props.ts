@@ -1,5 +1,11 @@
-import { MealItemProps } from '../MealItem/MealItem.props.ts';
+export interface Meal {
+  id: string;
+  name: string;
+  price: number;
+  description: string;
+  image: string;
+}
 
-export interface MealsProps {
-  meal? : MealItemProps
+export interface LoadedMeal extends Meal {
+  quantity: number;
 }

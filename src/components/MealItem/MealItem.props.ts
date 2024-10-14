@@ -1,6 +1,5 @@
+import { Meal } from '../Meals/Meals.props';
+
 export interface MealItemProps {
-  image: string,
-  name: string,
-  price: number,
-  description: string;
+  meal: Meal & { quantity: number };
 }

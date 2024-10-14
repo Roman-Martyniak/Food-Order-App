@@ -1,26 +1,34 @@
 import { FunctionComponent, useState, useEffect } from 'react';
 
 import MealItem from '../MealItem/MealItem.tsx';
-import { MealsProps } from './Meals.props.ts';
+import { Meal, LoadedMeal } from './Meals.props.ts';
 
-const Meals: FunctionComponent<MealsProps> = () => {
-  const [meals, setMeals] = useState([])
+const Meals: FunctionComponent = () => {
+  const [loadedMeals, setLoadedMeals] = useState<LoadedMeal[]>([]);
 
   useEffect(() => {
-    async function fetchMeals(){
+    async function fetchMeals() {
       const response = await fetch('http://localhost:3000/meals');
-
-      const resData = await response.json();
-      setMeals(resData);
+      if (!response.ok) {
+        console.error('Failed to fetch meals');
+        return;
+      }
+      const meals: Meal[] = await response.json();
+      const mealsWithQuantity = meals.map(meal => ({
+        ...meal,
+        quantity: 1,
+      }));
+      setLoadedMeals(mealsWithQuantity);
     }
-
-    fetchMeals()
-  }, [])
+    fetchMeals();
+  }, []);
 
   return (
-    <>
-      <ul id="meals">{meals.map(meal => <MealItem meal={meal}/>)}</ul>
-    </>
+    <ul id="meals">
+      {loadedMeals.map(meal => (
+        <MealItem key={meal.id} meal={meal} />
+      ))}
+    </ul>
   );
 };
 

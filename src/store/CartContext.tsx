@@ -1,11 +1,11 @@
 import { createContext, useReducer, ReactNode } from 'react';
-
-import { CartContextType, CartAction, CartItem, CartState } from './CartContext.types.ts';
+import { CartContextType, CartAction, CartItem, CartState } from './CartContext.types';
 
 export const CartContext = createContext<CartContextType>({
   items: [],
   addItem: () => {},
   removeItem: () => {},
+  clearCart: () => {},
 });
 
 function cartReducer(state: CartState, action: CartAction): CartState {
@@ -40,6 +40,9 @@ function cartReducer(state: CartState, action: CartAction): CartState {
       }
       return { ...state, items: updatedItems };
     }
+    case 'CLEAR_CART': {
+      return { ...state, items: [] };
+    }
     default:
       return state;
   }
@@ -56,10 +59,15 @@ export function CartContextProvider({ children }: { children: ReactNode }) {
     dispatchCartAction({ type: 'REMOVE_ITEM', id });
   }
 
+  function clearCart() {
+    dispatchCartAction({ type: 'CLEAR_CART' });
+  }
+
   const cartContext: CartContextType = {
     items: cart.items,
     addItem,
     removeItem,
+    clearCart,
   };
 
   return <CartContext.Provider value={cartContext}>{children}</CartContext.Provider>;

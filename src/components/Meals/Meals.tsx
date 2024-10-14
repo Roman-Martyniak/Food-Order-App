@@ -1,37 +1,31 @@
-import { FunctionComponent, useState, useEffect } from 'react';
+import { FunctionComponent } from 'react';
+import MealItem from '../MealItem/MealItem';
+import Error from '../Error/Error';
+import useHttp from '../../hooks/useHttp';
+import { Meal } from './Meals.props';
 
-import MealItem from '../MealItem/MealItem.tsx';
-import { Meal, LoadedMeal } from './Meals.props.ts';
+const requestConfig = {};
 
 const Meals: FunctionComponent = () => {
-  const [loadedMeals, setLoadedMeals] = useState<LoadedMeal[]>([]);
+  const {
+    data: loadedMeals,
+    isLoading,
+    error,
+  } = useHttp<Meal[]>('http://localhost:3000/meals', requestConfig, []);
 
-  useEffect(() => {
-    async function fetchMeals() {
-      const response = await fetch('http://localhost:3000/meals');
+  if (isLoading) {
+    return <p className="center">Fetching meals...</p>;
+  }
 
-      if (!response.ok) {
-        console.error('Failed to fetch meals');
-        return;
-      }
-
-      const meals: Meal[] = await response.json();
-
-      const mealsWithQuantity = meals.map(meal => ({
-        ...meal,
-        quantity: 1,
-      }));
-      setLoadedMeals(mealsWithQuantity);
-    }
-
-    fetchMeals();
-  }, []);
+  if (error) {
+    return <Error title="Failed to fetch meals" message={error} />;
+  }
 
   return (
     <ul id="meals">
-      {loadedMeals.map(meal => (
-        <MealItem key={meal.id} meal={meal} />
-      ))}
+      {loadedMeals?.map(meal => <MealItem key={meal.id} meal={{ ...meal, quantity: 1 }} />) || (
+        <p className="center">No meals available</p>
+      )}
     </ul>
   );
 };

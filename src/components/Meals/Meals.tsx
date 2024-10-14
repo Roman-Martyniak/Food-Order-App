@@ -9,17 +9,21 @@ const Meals: FunctionComponent = () => {
   useEffect(() => {
     async function fetchMeals() {
       const response = await fetch('http://localhost:3000/meals');
+
       if (!response.ok) {
         console.error('Failed to fetch meals');
         return;
       }
+
       const meals: Meal[] = await response.json();
+
       const mealsWithQuantity = meals.map(meal => ({
         ...meal,
         quantity: 1,
       }));
       setLoadedMeals(mealsWithQuantity);
     }
+
     fetchMeals();
   }, []);
 

@@ -1,12 +1,12 @@
 import { useContext } from 'react';
-import CartContext from '../../../store/CartContext';
-import { UserProgressContext } from '../../../store/UserProgressContext';
-import Input from '../Input/Input';
-import Button from '../Button/Button';
-import Modal from '../Modal/Modal';
-import { currencyFormatter } from '../../../utils/formatting';
-import useHttp from '../../../hooks/useHttp';
-import Error from '../../Error/Error';
+import CartContext from '../../../store/CartContext.tsx';
+import UserProgressContext from '../../../store/UserProgressContext.tsx';
+import Input from '../Input/Input.tsx';
+import Button from '../Button/Button.tsx';
+import Modal from '../Modal/Modal.tsx';
+import { currencyFormatter } from '../../../utils/formatting.ts';
+import useHttp from '../../../hooks/useHttp.ts';
+import Error from '../../Error/Error.tsx';
 
 const requestConfig = {
   method: 'POST' as const,
